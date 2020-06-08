@@ -11,20 +11,6 @@ jobs:
           ref: ${{ github.ref }}
       - name: Validate composer.json and composer.lock
         run: composer validate
-      
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v2
-        with:
-         path: vendor
-         key: ${{ runner.os }}-node-${{ hashFiles('**/composer.lock') }}
-         restore-keys: |
-          ${{ runner.os }}-node-
-
-      - name: Install dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer install --prefer-dist --no-progress --no-suggest
-      
       - name: Run PHPStan
         uses: nxtlvlsoftware/pmmp-phpstan-action@3
         with:
