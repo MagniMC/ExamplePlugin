@@ -9,8 +9,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-      - name: Validate composer.json and composer.lock
-        run: composer validate
       - name: Run PHPStan
         uses: nxtlvlsoftware/pmmp-phpstan-action@3
         with:
