@@ -3,32 +3,29 @@ name: PHPStan
 on: [push, pull_request]
 
 jobs:
-  build:
-
+  phpstan:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-          
-    - name: Validate composer.json and composer.lock
-      run: composer validate
+      - name: Validate composer.json and composer.lock
+        run: composer validate
       
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-node-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+         path: vendor
+         key: ${{ runner.os }}-node-${{ hashFiles('**/composer.lock') }}
+         restore-keys: |
           ${{ runner.os }}-node-
 
-    - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Install dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer install --prefer-dist --no-progress --no-suggest
       
-    - name: Run PHPStan
+      - name: Run PHPStan
         uses: nxtlvlsoftware/pmmp-phpstan-action@3
         with:
-        phpstan-config: phpstan.neon.dist
+         phpstan-config: phpstan.neon.dist
