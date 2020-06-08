@@ -1,4 +1,12 @@
 parameters:
-	level: 8
-	paths:
-		- src
+  paths:
+    - /source/src
+  level: 8
+  autoload_files:
+    - phar:///pocketmine/PocketMine-MP.phar/vendor/autoload.php
+  autoload_directories:
+    - /source/src
+  excludes_analyse:
+    - source/vendor
+  reportUnmatchedIgnoredErrors: false
+  checkMissingIterableValueType: false
